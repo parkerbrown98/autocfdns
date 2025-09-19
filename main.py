@@ -7,9 +7,9 @@ load_dotenv()
 
 def get_public_ip():
     """Fetch the public IP address of the home network."""
-    response = requests.get("https://api.ipify.org?format=json")
+    response = requests.get("https://icanhazip.com")
     response.raise_for_status()
-    return response.json().get("ip")
+    return response.text
 
 def get_dns_record(cloudflare_api_url, headers, zone_id, record_name):
     """Retrieve the DNS record from Cloudflare."""
