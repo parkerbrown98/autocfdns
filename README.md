@@ -1,12 +1,12 @@
 # Dynamic DNS Updater with Cloudflare API
 
-This Python script updates a Cloudflare DNS record with the current public IP address of your home network. It's useful for maintaining dynamic DNS (DDNS) functionality.
+This Python script updates one or more Cloudflare DNS records with the current public IP address of your home network. It's useful for maintaining dynamic DNS (DDNS) functionality.
 
 ## Features
 
 - Fetch the public IP address of your home network using the [ipify API](https://www.ipify.org/).
-- Retrieve the current DNS record from Cloudflare.
-- Update the DNS record if the IP address has changed.
+- Retrieve current DNS records from Cloudflare.
+- Update each DNS record if the IP address has changed.
 
 ## Prerequisites
 
@@ -47,6 +47,20 @@ This Python script updates a Cloudflare DNS record with the current public IP ad
    ```
 
    Replace `your_cloudflare_api_token`, `your_zone_id`, and `your_record_name` with your actual Cloudflare credentials and record information.
+
+   You can also configure multiple records using `CLOUDFLARE_RECORD_NAMES`:
+
+   ```env
+   CLOUDFLARE_RECORD_NAMES=sub1.example.com,sub2.example.com
+   ```
+
+   Or as a JSON array:
+
+   ```env
+   CLOUDFLARE_RECORD_NAMES=["sub1.example.com","sub2.example.com"]
+   ```
+
+   `CLOUDFLARE_RECORD_NAME` (single record) is still supported for backward compatibility.
 
 4. **Run the script:**
 
@@ -97,10 +111,10 @@ grep CRON /var/log/syslog
    The script fetches your current public IP address using the `ipify` API.
 
 2. **DNS Record Retrieval:**  
-   It checks for an existing DNS record in Cloudflare matching the specified `RECORD_NAME`.
+   It checks for existing DNS records in Cloudflare matching the configured record name(s).
 
 3. **DNS Record Update:**  
-   If the public IP address differs from the one in the DNS record, the script updates the record with the new IP.
+   If the public IP address differs from a record's current value, the script updates that record with the new IP.
 
 4. **Logs:**  
    The script prints information about its progress and any errors encountered.
