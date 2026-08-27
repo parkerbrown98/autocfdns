@@ -67,7 +67,7 @@ def update_dns_record(cloudflare_api_url, headers, zone_id, dns_records, ip):
             "name": record_name,
             "content": ip,
             "ttl": 1,  # Automatic TTL
-            "proxied": True
+            "proxied": dns_record.get("proxied", True)
         }
 
         try:
