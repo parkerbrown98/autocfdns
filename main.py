@@ -26,8 +26,6 @@ def parse_record_names(raw_record_names):
             parsed = json.loads(value)
             if isinstance(parsed, list):
                 return [str(name).strip() for name in parsed if str(name).strip()]
-            if isinstance(parsed, str) and parsed.strip():
-                return [parsed.strip()]
         except json.JSONDecodeError:
             pass
 
